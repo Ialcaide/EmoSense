@@ -1,0 +1,14 @@
+{% comment %}
+Logo de EmoSense: rostro circular violeta con ojos blancos, sonrisa y mejillas
+coral. El ojo derecho guiña cada ~4,5 s (CSS en base.css, clase logo__guino).
+Es decorativo (aria-hidden): siempre va junto al nombre o a un texto.
+Uso: {% include "partials/logo.html" with clase="marca__logo" %}
+{% endcomment %}
+<svg class="logo {{ clase }}" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <circle cx="32" cy="32" r="30" fill="#6C5CE7"/>
+  <circle cx="16.5" cy="38.5" r="4.5" fill="#FF7A59" opacity="0.9"/>
+  <circle cx="47.5" cy="38.5" r="4.5" fill="#FF7A59" opacity="0.9"/>
+  <ellipse cx="23" cy="26" rx="4" ry="5.5" fill="#FFFFFF"/>
+  <ellipse class="logo__guino" cx="41" cy="26" rx="4" ry="5.5" fill="#FFFFFF"/>
+  <path d="M21 38.5c2.6 4.4 6.6 6.8 11 6.8s8.4-2.4 11-6.8" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+</svg>

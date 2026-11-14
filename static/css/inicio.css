@@ -1,0 +1,211 @@
+/* =========================================================================
+   EmoSense – Página de inicio
+   Mobile-first: una columna; desde 640px, hero en dos columnas.
+   ========================================================================= */
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--esp-4);
+  align-items: center;
+  padding-block: var(--esp-2) var(--esp-4);
+}
+
+@media (min-width: 640px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  }
+}
+
+.hero__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--esp-2);
+}
+
+.hero__titulo {
+  font-size: 2.25rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 1024px) {
+  .hero__titulo {
+    font-size: 3.25rem;
+  }
+}
+
+.hero__resalte {
+  color: var(--primario-texto);
+}
+
+.hero__descripcion {
+  max-width: 52ch;
+  color: var(--texto-secundario);
+  font-size: 1.125rem;
+}
+
+.hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-1);
+  margin-top: var(--esp-1);
+}
+
+.hero__ilustracion {
+  display: flex;
+  justify-content: center;
+  /* En celular, el logo va arriba del texto. */
+  order: -1;
+}
+
+@media (min-width: 640px) {
+  .hero__ilustracion {
+    order: 0;
+  }
+}
+
+.hero__logo {
+  width: clamp(120px, 34vw, 320px);
+  height: auto;
+  filter: drop-shadow(0 16px 32px color-mix(in srgb, var(--primario) 35%, transparent));
+}
+
+/* ---------- Secciones ---------- */
+.seccion {
+  margin-top: var(--esp-6);
+}
+
+.seccion__titulo {
+  margin-bottom: var(--esp-3);
+}
+
+/* Cómo funciona */
+.pasos {
+  padding: 0;
+  list-style: none;
+}
+
+/* En tablet (2 columnas) la tercera tarjeta ocupa todo el ancho en vez de quedar sola. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .pasos > .paso:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+.paso {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+.paso__numero {
+  position: absolute;
+  top: var(--esp-2);
+  right: var(--esp-2);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--primario) 14%, transparent);
+  color: var(--primario-texto);
+  font-weight: 700;
+}
+
+.paso__emoji {
+  font-size: 40px;
+  line-height: 1;
+}
+
+/* Privacidad */
+.privacidad {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--esp-3);
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .privacidad {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.privacidad__punto {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-2);
+}
+
+.privacidad__emoji {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--primario) 10%, transparent);
+  font-size: 24px;
+}
+
+.privacidad__punto h3 {
+  font-size: 1.125rem;
+  margin-bottom: 4px;
+}
+
+/* Limitaciones */
+.limitaciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  padding: var(--esp-3);
+}
+
+.limitaciones__titulo {
+  font-size: 1.25rem;
+}
+
+/* Grupos de chips del hero (tú / tu cliente) */
+.hero__grupos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+.hero__grupo-titulo {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--texto-secundario);
+}
+
+/* ¿Para quién es? (4 perfiles: 1 / 2 / 4 columnas) */
+.perfiles {
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .perfiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .perfiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.perfil {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+.perfil__emoji {
+  font-size: 40px;
+  line-height: 1;
+}

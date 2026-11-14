@@ -1,0 +1,113 @@
+/* =========================================================================
+   EmoSense – Tokens del sistema de diseño
+   Variables CSS para tema claro (:root) y oscuro ([data-theme="dark"]).
+   ========================================================================= */
+
+:root {
+  /* Tipografía */
+  --fuente-titulos: "Fredoka", "Nunito Sans", system-ui, sans-serif;
+  --fuente-texto: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Marca */
+  --primario: #6C5CE7;
+  --primario-hover: #5A4BD1;
+  --primario-texto: #5A4BD1;      /* violeta para texto/enlaces (AA sobre fondo) */
+  --sobre-primario: #FFFFFF;
+  --acento: #FF7A59;
+  --sobre-acento: #1E1B2E;        /* texto oscuro sobre acento para cumplir AA */
+
+  /* Superficies y texto (claro) */
+  --fondo: #F6F5FB;
+  --superficie: #FFFFFF;
+  --texto: #1E1B2E;
+  --texto-secundario: #6B6880;
+  --borde: #E4E2EE;
+
+  /* Emociones (claves sin tilde) */
+  --emo-alegria: #F5B700;
+  --emo-tristeza: #3B82F6;
+  --emo-enojo: #E5484D;
+  --emo-sorpresa: #F97316;
+  --emo-miedo: #8B5CF6;
+  --emo-disgusto: #22A06B;
+  --emo-neutral: #8A94A6;
+
+  /* Estados */
+  --exito: #22A06B;
+  --advertencia: #F5A524;
+  --error: #E5484D;
+  --info: #3B82F6;
+
+  /* Foco accesible */
+  --foco: #6C5CE7;
+
+  /* Espaciado (múltiplos de 8px) */
+  --esp-1: 8px;
+  --esp-2: 16px;
+  --esp-3: 24px;
+  --esp-4: 32px;
+  --esp-5: 40px;
+  --esp-6: 48px;
+  --esp-8: 64px;
+
+  /* Radios */
+  --radio-tarjeta: 18px;
+  --radio-boton: 12px;
+  --radio-pildora: 999px;
+
+  /* Sombras */
+  --sombra-suave: 0 1px 2px rgba(30, 27, 46, 0.04), 0 8px 24px rgba(30, 27, 46, 0.06);
+  --sombra-media: 0 2px 4px rgba(30, 27, 46, 0.06), 0 16px 40px rgba(30, 27, 46, 0.10);
+
+  /* Layout */
+  --ancho-max: 1200px;
+  --alto-barra: 64px;
+  --alto-boton: 44px;
+
+  /* Movimiento */
+  --transicion: 160ms ease;
+
+  color-scheme: light;
+}
+
+/* Tema oscuro explícito */
+[data-theme="dark"] {
+  --primario-texto: #A29BFE;
+  --sobre-acento: #1E1B2E;
+
+  --fondo: #12111A;
+  --superficie: #1C1B27;
+  --texto: #F2F1F8;
+  --texto-secundario: #A7A4BA;
+  --borde: #2C2A3A;
+
+  --foco: #A29BFE;
+
+  --sombra-suave: 0 1px 2px rgba(0, 0, 0, 0.30), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --sombra-media: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.45);
+
+  color-scheme: dark;
+}
+
+/* Respaldo sin JavaScript: seguir la preferencia del sistema */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --primario-texto: #A29BFE;
+    --fondo: #12111A;
+    --superficie: #1C1B27;
+    --texto: #F2F1F8;
+    --texto-secundario: #A7A4BA;
+    --borde: #2C2A3A;
+    --foco: #A29BFE;
+    --sombra-suave: 0 1px 2px rgba(0, 0, 0, 0.30), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --sombra-media: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+}
+
+/* Movimiento reducido: sin transiciones */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transicion: 0ms;
+  }
+}

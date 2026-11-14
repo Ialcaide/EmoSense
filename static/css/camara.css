@@ -1,0 +1,113 @@
+/* =========================================================================
+   EmoSense – Componentes comunes de cámara
+   Escena 4:3 con video y canvas, controles, estado y avisos.
+   Los usa el detector.
+   ========================================================================= */
+
+/* ---------- Escena 4:3 ---------- */
+.escena {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--primario) 8%, var(--superficie));
+}
+
+.escena__medio,
+.escena__lienzo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.escena__medio {
+  object-fit: contain;
+}
+
+.escena__lienzo {
+  pointer-events: none;
+}
+
+/* El video se muestra en espejo; el canvas no, para que el texto se lea bien. */
+.espejo {
+  transform: scaleX(-1);
+}
+
+.escena__vacio {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-1);
+  padding: var(--esp-2);
+  color: var(--texto-secundario);
+  font-weight: 600;
+  text-align: center;
+}
+
+.escena__vacio-emoji {
+  font-size: 64px;
+  line-height: 1;
+}
+
+/* ---------- Controles ---------- */
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-1);
+}
+
+.estado-vivo {
+  margin-left: auto;
+  padding: 4px 12px;
+  border-radius: var(--radio-pildora);
+  background: color-mix(in srgb, var(--exito) 12%, transparent);
+  color: var(--texto);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+/* ---------- Alertas ---------- */
+.alertas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+.alertas:empty {
+  display: none;
+}
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--esp-1);
+}
+
+.aviso p {
+  flex: 1;
+}
+
+.aviso__cerrar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin: -4px -4px 0 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--texto-secundario);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.aviso__cerrar:hover {
+  background: color-mix(in srgb, var(--texto) 8%, transparent);
+  color: var(--texto);
+}

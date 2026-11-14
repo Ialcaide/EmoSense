@@ -1,0 +1,17 @@
+# Entornos virtuales
+venv/
+.venv/
+
+# Variables de entorno
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Archivos estáticos recopilados
+staticfiles/
+
+# Modelos de IA (se descargan con descargar_modelos.py)
+modelos_ia/*
+!modelos_ia/.gitkeep

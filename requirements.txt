@@ -1,0 +1,5 @@
+Django>=5.2,<6
+psycopg[binary]
+opencv-python-headless>=4.10,<5.0
+numpy
+python-dotenv

@@ -1,0 +1,81 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es-EC">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% block descripcion %}EmoSense: entrenador de expresión facial para atención al cliente, con retroalimentación en tiempo real.{% endblock %}">
+  <title>{% block titulo %}EmoSense{% endblock %} · EmoSense</title>
+
+  {# Aplica el tema guardado antes de pintar para evitar parpadeo. #}
+  <script>
+    (function () {
+      var tema = null;
+      try { tema = localStorage.getItem("emosense-tema"); } catch (e) {}
+      if (tema !== "light" && tema !== "dark") {
+        tema = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.setAttribute("data-theme", tema);
+    })();
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/logo.svg' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Nunito+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {% block estilos %}{% endblock %}
+</head>
+<body>
+  <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  {% with vista=request.resolver_match.view_name %}
+  <header class="barra">
+    <nav class="contenedor barra__interior" aria-label="Navegación principal">
+      <a class="marca" href="{% url 'inicio' %}">
+        {% include "partials/logo.html" with clase="marca__logo" %}
+        <span>EmoSense</span>
+      </a>
+
+      <ul class="menu" id="menu-principal">
+        <li><a class="menu__enlace" href="{% url 'inicio' %}"{% if vista == 'inicio' %} aria-current="page"{% endif %}>Inicio</a></li>
+        <li><a class="menu__enlace" href="{% url 'detector:index' %}"{% if vista == 'detector:index' %} aria-current="page"{% endif %}>Entrenador</a></li>
+        <li><a class="menu__enlace" href="{% url 'detector:index' %}#guia">Guía de atención</a></li>
+      </ul>
+
+      <div class="barra__acciones">
+        <button type="button" class="boton boton--fantasma boton--icono" id="boton-tema"
+                aria-label="Cambiar tema" aria-pressed="false">🌙</button>
+        <button type="button" class="boton boton--fantasma boton--icono boton-hamburguesa" id="boton-menu"
+                aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal">☰</button>
+      </div>
+    </nav>
+  </header>
+  {% endwith %}
+
+  <main id="contenido" class="contenido" tabindex="-1">
+    <div class="contenedor">
+      {% block contenido %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor pie__interior">
+      <p>EmoSense – UNEMI – Construcción de Software 2026</p>
+      <p>Estima gestos visibles; no determina emociones reales.</p>
+    </div>
+  </footer>
+
+  {# Pantalla de carga reutilizable. Oculta por defecto; una página puede      #}
+  {# mostrarla al inicio redefiniendo el bloque carga_inicial con "data-inicial". #}
+  <div class="pantalla-carga" id="pantalla-carga" role="status" aria-live="polite" {% block carga_inicial %}hidden{% endblock %}>
+    {% include "partials/logo.html" with clase="pantalla-carga__logo" %}
+    <div class="pantalla-carga__spinner" aria-hidden="true"></div>
+    <p class="pantalla-carga__texto" id="pantalla-carga-texto">Preparando EmoSense…</p>
+  </div>
+  <noscript><style>.pantalla-carga { display: none !important; }</style></noscript>
+
+  <script src="{% static 'js/tema.js' %}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

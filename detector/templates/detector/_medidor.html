@@ -1,0 +1,45 @@
+{# Medidor de amabilidad: sesión de práctica de 60 s (lógica en static/js/medidor.js). #}
+<section class="medidor" id="medidor" aria-labelledby="medidor-titulo">
+  <div class="medidor__cabecera">
+    <h2 class="medidor__titulo" id="medidor-titulo">⏱️ Medidor de amabilidad</h2>
+    <p class="medidor__intro">
+      Durante {{ practica.duracion }} segundos mide en qué porcentaje de los análisis muestras una
+      expresión amable (alegría o neutral). Imagina que atiendes a un cliente.
+    </p>
+  </div>
+
+  {# Inicio #}
+  <div class="medidor__acciones" id="medidor-inicio">
+    <button type="button" class="boton boton--primario" id="boton-practicar">Practicar atención ({{ practica.duracion }} s)</button>
+  </div>
+
+  {# En curso #}
+  <div class="medidor__curso" id="medidor-curso" hidden>
+    <div class="medidor__tiempo">
+      <span class="medidor__restante" id="medidor-restante" aria-live="off">{{ practica.duracion }}</span>
+      <span class="texto-secundario">segundos restantes</span>
+    </div>
+    <div class="medidor__barra" aria-hidden="true"><span class="medidor__barra-relleno" id="medidor-barra"></span></div>
+    <p class="medidor__vivo">
+      Amable ahora: <strong id="medidor-vivo">—</strong>
+      <span class="texto-secundario" id="medidor-conteo"></span>
+    </p>
+    <button type="button" class="boton boton--secundario" id="boton-cancelar-practica">Cancelar práctica</button>
+  </div>
+
+  {# Resultado #}
+  <div class="medidor__resultado" id="medidor-resultado" role="status" hidden>
+    <p class="medidor__porcentaje" id="resultado-porcentaje"></p>
+    <p class="medidor__mensaje" id="resultado-mensaje"></p>
+    <ul class="medidor__consejos" id="resultado-consejos"></ul>
+    <p class="nota" id="resultado-guardado"></p>
+    <button type="button" class="boton boton--secundario" id="boton-repetir-practica">Practicar de nuevo</button>
+  </div>
+
+  {# Historial en este navegador #}
+  <div class="medidor__historial" id="medidor-historial" hidden>
+    <h3 class="medidor__subtitulo">Tus últimas sesiones <span class="texto-secundario">(solo en este navegador)</span></h3>
+    <ol class="historial" id="lista-historial"></ol>
+    <button type="button" class="boton boton--fantasma" id="boton-borrar-historial">Borrar historial</button>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+{# Guía de atención: se genera desde detector/emociones_info.py. Se abre sola con /detector/#guia. #}
+<details class="guia" id="guia">
+  <summary class="guia__resumen">
+    <span class="guia__titulo"><span aria-hidden="true">📖</span> Guía de atención</span>
+    <span class="guia__indicador" aria-hidden="true"></span>
+  </summary>
+
+  <div class="guia__contenido">
+    <p class="guia__intro">Cómo se ve cada expresión en el rostro y cómo actuar frente al cliente.</p>
+
+    {% for grupo in guia %}
+    <section class="guia__grupo" aria-labelledby="grupo-{{ grupo.rol }}">
+      <h3 class="guia__grupo-titulo" id="grupo-{{ grupo.rol }}"><span aria-hidden="true">{{ grupo.emoji }}</span> {{ grupo.titulo }}</h3>
+      <p class="guia__grupo-descripcion">{{ grupo.descripcion }}</p>
+      <ul class="guia__cuadricula guia__cuadricula--{{ grupo.rol }}">
+        {% for emo in grupo.emociones %}
+        <li class="tarjeta guia__tarjeta" data-emocion="{{ emo.clave }}" data-rol="{{ emo.rol }}" style="--emo: {{ emo.color }}">
+          <h4 class="guia__nombre">
+            <span class="guia__emoji" aria-hidden="true">{{ emo.emoji }}</span>
+            {{ emo.nombre }}
+          </h4>
+          <dl class="guia__filas">
+            {% for fila in emo.filas %}
+            <div class="guia__fila">
+              <dt><span aria-hidden="true">{{ fila.emoji }}</span> {{ fila.parte }}</dt>
+              <dd>{{ fila.texto }}</dd>
+            </div>
+            {% endfor %}
+          </dl>
+          <div class="guia__consejo">
+            <p><strong>{% if emo.rol == "cliente" %}Cómo responder:{% else %}Cuándo usarla:{% endif %}</strong> {{ emo.consejo_atencion }}</p>
+            <p class="guia__situacion"><span aria-hidden="true">💼</span> {{ emo.situacion }}</p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endfor %}
+
+    <ul class="guia__cuadricula guia__extras">
+      <li class="tarjeta guia__tarjeta guia__tarjeta--practicas">
+        <h4 class="guia__nombre">
+          <span class="guia__emoji" aria-hidden="true">🤝</span>
+          Buenas prácticas
+        </h4>
+        <ul class="guia__consejos">
+          {% for practica in buenas_practicas %}
+          <li>
+            <span class="guia__consejo-emoji" aria-hidden="true">{{ practica.emoji }}</span>
+            <span><strong>{{ practica.titulo }}.</strong> {{ practica.texto }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+
+      <li class="tarjeta guia__tarjeta guia__tarjeta--consejos">
+        <h4 class="guia__nombre">
+          <span class="guia__emoji" aria-hidden="true">📷</span>
+          Consejos para la cámara
+        </h4>
+        <ul class="guia__consejos">
+          {% for consejo in consejos %}
+          <li>
+            <span class="guia__consejo-emoji" aria-hidden="true">{{ consejo.emoji }}</span>
+            <span><strong>{{ consejo.titulo }}.</strong> {{ consejo.texto }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+  </div>
+</details>

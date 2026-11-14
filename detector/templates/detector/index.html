@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %}Entrenador{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{% static 'css/camara.css' %}">
+<link rel="stylesheet" href="{% static 'css/detector.css' %}">
+{% endblock %}
+
+{% block carga_inicial %}data-inicial{% endblock %}
+
+{% block contenido %}
+<section class="encabezado">
+  <span class="encabezado__etiqueta">Entrenador</span>
+  <h1>Entrenador de atención al cliente</h1>
+  <p>Practica una expresión amable frente a la cámara, mide tu actitud durante 60 segundos y aprende a reconocer y responder a las expresiones de un cliente.</p>
+</section>
+
+<div class="detector" id="detector"
+     data-url-analizar="{% url 'api:analizar' %}"
+     data-url-foto="{% url 'api:foto' %}">
+
+  {# ---------- Columna izquierda: captura ---------- #}
+  <section class="tarjeta detector__captura" aria-label="Captura de imagen">
+    <div class="segmento" role="tablist" aria-label="Modo de captura">
+      <button type="button" class="segmento__opcion" role="tab" id="pestana-camara"
+              aria-selected="true" aria-controls="panel-camara" data-modo="camara">📹 Cámara</button>
+      <button type="button" class="segmento__opcion" role="tab" id="pestana-foto"
+              aria-selected="false" aria-controls="panel-foto" data-modo="foto" tabindex="-1">🖼️ Foto</button>
+    </div>
+
+    <div class="detector__modo" id="panel-camara" role="tabpanel" aria-labelledby="pestana-camara">
+      <div class="escena" id="escena-camara">
+        <video class="escena__medio espejo" id="video" autoplay playsinline muted></video>
+        <canvas class="escena__lienzo" id="lienzo-camara" aria-hidden="true"></canvas>
+        <div class="escena__vacio" id="vacio-camara">
+          <span class="escena__vacio-emoji" aria-hidden="true">📷</span>
+          <p>Pulsa «Iniciar cámara» para comenzar</p>
+        </div>
+      </div>
+      <div class="controles">
+        <button type="button" class="boton boton--primario" id="boton-iniciar">Iniciar cámara</button>
+        <button type="button" class="boton boton--secundario" id="boton-detener" disabled>Detener cámara</button>
+        <span class="estado-vivo" id="estado-camara" hidden>🟢 Analizando...</span>
+      </div>
+
+      {% include "detector/_medidor.html" %}
+    </div>
+
+    <div class="detector__modo" id="panel-foto" role="tabpanel" aria-labelledby="pestana-foto" hidden>
+      <label class="zona-subida" id="zona-subida" for="input-foto">
+        <span class="zona-subida__icono" aria-hidden="true">🖼️</span>
+        <span class="zona-subida__titulo">Elige una foto</span>
+        <span class="zona-subida__detalle">JPG, PNG o WebP – máximo 2 MB – no se guarda</span>
+        <input class="sr-only" type="file" id="input-foto" accept="image/jpeg,image/png,image/webp">
+      </label>
+      <div class="escena" id="escena-foto" hidden>
+        <img class="escena__medio" id="foto-previa" alt="Vista previa de la foto elegida">
+        <canvas class="escena__lienzo" id="lienzo-foto" aria-hidden="true"></canvas>
+      </div>
+      <p class="estado-vivo" id="estado-foto" hidden>⏳ Analizando foto...</p>
+    </div>
+
+    <div class="alertas" id="alertas" aria-live="polite"></div>
+  </section>
+
+  {# ---------- Columna derecha: resultados ---------- #}
+  <aside class="tarjeta panel" aria-label="Resultado del análisis">
+    <div class="panel__cabecera" aria-live="polite">
+      <span class="panel__emoji" id="resultado-emoji" aria-hidden="true">🙂</span>
+      <h2 class="panel__nombre">
+        <span id="resultado-nombre">Esperando imagen</span>
+        <span class="panel__extra" id="resultado-extra"></span>
+      </h2>
+    </div>
+    <p class="panel__descripcion" id="resultado-descripcion">
+      Inicia la cámara o elige una foto para ver la expresión estimada.
+    </p>
+    <img class="panel__gif" id="resultado-gif" alt="" hidden>
+
+    <section class="consejo" id="consejo-atencion" aria-labelledby="consejo-titulo" hidden>
+      <h3 class="consejo__titulo" id="consejo-titulo">💬 Consejo de atención</h3>
+      <p class="consejo__etiqueta" id="consejo-etiqueta"></p>
+      <p class="consejo__texto" id="consejo-texto"></p>
+      <p class="consejo__situacion" id="consejo-situacion" hidden>
+        <strong>Situación de ejemplo:</strong> <span id="consejo-situacion-texto"></span>
+      </p>
+    </section>
+
+    <h3 class="panel__subtitulo">Puntuaciones</h3>
+    <ul class="puntajes">
+      {% for clave, emo in emociones.items %}
+      <li class="puntaje" data-puntaje="{{ clave }}" style="--emo: {{ emo.color }}">
+        <span class="puntaje__etiqueta"><span aria-hidden="true">{{ emo.emoji }}</span> {{ emo.nombre }}</span>
+        <span class="puntaje__pista" aria-hidden="true"><span class="puntaje__relleno"></span></span>
+        <span class="puntaje__valor">0%</span>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <dl class="filas">
+      <div class="filas__fila">
+        <dt>Rostros detectados</dt>
+        <dd id="dato-rostros">—</dd>
+      </div>
+      <div class="filas__fila">
+        <dt>Tiempo de análisis</dt>
+        <dd id="dato-tiempo">—</dd>
+      </div>
+    </dl>
+
+    <h3 class="panel__subtitulo">Recomendaciones</h3>
+    <ul class="recomendaciones" id="lista-recomendaciones">
+      <li>Busca buena luz y mira de frente a la cámara.</li>
+    </ul>
+
+    <p class="nota">Las puntuaciones muestran la preferencia del modelo, no una certeza emocional.</p>
+  </aside>
+</div>
+
+{% include "detector/_guia.html" %}
+
+{{ emociones|json_script:"datos-emociones" }}
+{{ practica|json_script:"datos-practica" }}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/camara.js' %}" defer></script>
+<script src="{% static 'js/medidor.js' %}" defer></script>
+<script src="{% static 'js/detector.js' %}" defer></script>
+{% endblock %}

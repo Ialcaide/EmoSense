@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block estilos %}<link rel="stylesheet" href="{% static 'css/inicio.css' %}">{% endblock %}
+
+{% block carga_inicial %}data-inicial{% endblock %}
+
+{% block contenido %}
+{# ---------- Hero ---------- #}
+<section class="hero" aria-labelledby="hero-titulo">
+  <div class="hero__texto">
+    <span class="encabezado__etiqueta">Entrenador de atención al cliente</span>
+    <h1 class="hero__titulo" id="hero-titulo">Tu expresión también atiende. <span class="hero__resalte">Entrénala con EmoSense.</span></h1>
+    <p class="hero__descripcion">
+      Practica frente a la cámara una expresión amable y profesional, y aprende a reconocer
+      cuándo un cliente está molesto, triste o preocupado para responderle mejor.
+    </p>
+    <div class="hero__grupos">
+      <p class="hero__grupo-titulo">Tú muestras</p>
+      <ul class="lista-chips" aria-label="Expresiones que debes mostrar">
+        {% for emo in propias %}
+        <li class="chip chip--{{ emo.clave }}"><span aria-hidden="true">{{ emo.emoji }}</span> {{ emo.nombre }}</li>
+        {% endfor %}
+      </ul>
+      <p class="hero__grupo-titulo">Tu cliente puede mostrar</p>
+      <ul class="lista-chips" aria-label="Expresiones del cliente que debes reconocer">
+        {% for emo in del_cliente %}
+        <li class="chip chip--{{ emo.clave }}"><span aria-hidden="true">{{ emo.emoji }}</span> {{ emo.nombre }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="hero__acciones">
+      <a class="boton boton--primario" href="{% url 'detector:index' %}">Comenzar entrenamiento</a>
+      <a class="boton boton--secundario" href="{% url 'detector:index' %}#guia">Ver guía de atención</a>
+    </div>
+  </div>
+  <div class="hero__ilustracion">
+    {% include "partials/logo.html" with clase="hero__logo" %}
+  </div>
+</section>
+
+{# ---------- ¿Para quién es? ---------- #}
+<section class="seccion" aria-labelledby="titulo-para-quien">
+  <h2 class="seccion__titulo" id="titulo-para-quien">¿Para quién es?</h2>
+  <ul class="cuadricula perfiles">
+    {% for perfil in perfiles %}
+    <li class="tarjeta perfil">
+      <span class="perfil__emoji" aria-hidden="true">{{ perfil.emoji }}</span>
+      <h3>{{ perfil.titulo }}</h3>
+      <p class="texto-secundario">{{ perfil.texto }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{# ---------- Cómo funciona ---------- #}
+<section class="seccion" aria-labelledby="titulo-como">
+  <h2 class="seccion__titulo" id="titulo-como">Cómo funciona</h2>
+  <ol class="cuadricula cuadricula--3 pasos">
+    {% for paso in pasos %}
+    <li class="tarjeta paso">
+      <span class="paso__numero" aria-hidden="true">{{ forloop.counter }}</span>
+      <span class="paso__emoji" aria-hidden="true">{{ paso.emoji }}</span>
+      <h3>{{ paso.titulo }}</h3>
+      <p class="texto-secundario">{{ paso.texto }}</p>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+
+{# ---------- Privacidad ---------- #}
+<section class="seccion" aria-labelledby="titulo-privacidad">
+  <h2 class="seccion__titulo" id="titulo-privacidad">Tu privacidad</h2>
+  <ul class="tarjeta privacidad">
+    {% for punto in privacidad %}
+    <li class="privacidad__punto">
+      <span class="privacidad__emoji" aria-hidden="true">{{ punto.emoji }}</span>
+      <div>
+        <h3>{{ punto.titulo }}</h3>
+        <p class="texto-secundario">{{ punto.texto }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{# ---------- Limitaciones ---------- #}
+<section class="seccion" aria-labelledby="titulo-limitaciones">
+  <div class="alerta alerta--advertencia limitaciones">
+    <h2 class="limitaciones__titulo" id="titulo-limitaciones">⚠️ Limitaciones</h2>
+    <p>
+      EmoSense estima gestos visibles; <strong>no determina emociones reales</strong> ni sirve para
+      diagnosticar. Un gesto no siempre refleja lo que una persona siente, y el modelo puede
+      equivocarse con poca luz, rostros de perfil, lentes o gorras, y con diferencias entre personas
+      y culturas. Es una herramienta de práctica personal: <strong>no debe usarse para evaluar el
+      desempeño de trabajadores</strong> ni para juzgar a clientes.
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,537 @@
+/* =========================================================================
+   EmoSense – Estilos base
+   Reset, layout, barra de navegación, botones, tarjetas, chips, alertas
+   y pantalla de carga. Mobile-first: breakpoints en 640px y 1024px.
+   ========================================================================= */
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+/* El atributo hidden siempre oculta, aunque el componente defina display. */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--texto);
+  background-color: var(--fondo);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+
+p {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: var(--primario-texto);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Foco visible violeta */
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+/* Solo lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Enlace "saltar al contenido" */
+.saltar-contenido {
+  position: absolute;
+  left: var(--esp-2);
+  top: -100px;
+  z-index: 200;
+  padding: var(--esp-1) var(--esp-2);
+  background: var(--primario);
+  color: var(--sobre-primario);
+  border-radius: var(--radio-boton);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.saltar-contenido:focus {
+  top: var(--esp-1);
+}
+
+/* ---------- Logo (partials/logo.html) ---------- */
+.logo {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Guiño del ojo derecho cada ~4,5 s */
+.logo__guino {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: guino 4.5s ease-in-out infinite;
+}
+
+@keyframes guino {
+  0%, 90%, 100% { transform: scaleY(1); }
+  94% { transform: scaleY(0.1); }
+}
+
+/* ---------- Layout ---------- */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--esp-2);
+}
+
+.contenido {
+  flex: 1;
+  padding-block: var(--esp-4);
+}
+
+.texto-secundario {
+  color: var(--texto-secundario);
+}
+
+.pila > * + * {
+  margin-top: var(--esp-2);
+}
+
+/* ---------- Barra de navegación ---------- */
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+}
+
+.barra__interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+  min-height: var(--alto-barra);
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  font-size: 1.375rem;
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.marca__logo {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.barra__acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-1);
+}
+
+/* Menú: oculto en celular hasta que se abra */
+.menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: var(--esp-1) var(--esp-2) var(--esp-2);
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+  box-shadow: var(--sombra-suave);
+  list-style: none;
+}
+
+.menu.esta-abierto {
+  display: block;
+}
+
+.menu__enlace {
+  display: flex;
+  align-items: center;
+  min-height: var(--alto-boton);
+  padding-inline: var(--esp-2);
+  border-radius: var(--radio-boton);
+  color: var(--texto);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.menu__enlace:hover {
+  background: color-mix(in srgb, var(--primario) 10%, transparent);
+}
+
+.menu__enlace[aria-current="page"] {
+  color: var(--primario-texto);
+  background: color-mix(in srgb, var(--primario) 12%, transparent);
+}
+
+.boton-hamburguesa {
+  display: inline-flex;
+}
+
+@media (min-width: 640px) {
+  .menu {
+    display: flex;
+    position: static;
+    gap: var(--esp-1);
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+
+  /* Más específico que .boton (definido después) para que sí se oculte. */
+  .barra .boton-hamburguesa {
+    display: none;
+  }
+
+  /* El menú queda entre la marca y las acciones */
+  .barra__interior {
+    justify-content: flex-start;
+  }
+
+  .barra__acciones {
+    margin-left: auto;
+  }
+}
+
+/* ---------- Botones ---------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-1);
+  min-height: var(--alto-boton);
+  padding: 0 var(--esp-3);
+  border: 2px solid transparent;
+  border-radius: var(--radio-boton);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transicion), border-color var(--transicion),
+    color var(--transicion), transform var(--transicion);
+}
+
+.boton:active {
+  transform: translateY(1px);
+}
+
+.boton:disabled,
+.boton[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.boton--primario {
+  background: var(--primario);
+  color: var(--sobre-primario);
+}
+
+.boton--primario:hover:not(:disabled) {
+  background: var(--primario-hover);
+}
+
+.boton--secundario {
+  background: transparent;
+  border-color: var(--primario);
+  color: var(--primario-texto);
+}
+
+.boton--secundario:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primario) 10%, transparent);
+}
+
+.boton--fantasma {
+  background: transparent;
+  color: var(--texto);
+}
+
+.boton--fantasma:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--texto) 8%, transparent);
+}
+
+/* Botón de solo icono (requiere aria-label) */
+.boton--icono {
+  width: var(--alto-boton);
+  padding: 0;
+  font-size: 1.25rem;
+}
+
+/* ---------- Tarjetas ---------- */
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+  box-shadow: var(--sombra-suave);
+  padding: var(--esp-3);
+}
+
+.cuadricula {
+  display: grid;
+  gap: var(--esp-3);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .cuadricula--2,
+  .cuadricula--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cuadricula--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- Chips de emoción ---------- */
+.chip {
+  --chip-color: var(--emo-neutral);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radio-pildora);
+  background: color-mix(in srgb, var(--chip-color) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--chip-color) 35%, transparent);
+  color: var(--texto);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+
+.chip--alegria  { --chip-color: var(--emo-alegria); }
+.chip--tristeza { --chip-color: var(--emo-tristeza); }
+.chip--enojo    { --chip-color: var(--emo-enojo); }
+.chip--sorpresa { --chip-color: var(--emo-sorpresa); }
+.chip--miedo    { --chip-color: var(--emo-miedo); }
+.chip--disgusto { --chip-color: var(--emo-disgusto); }
+.chip--neutral  { --chip-color: var(--emo-neutral); }
+
+.lista-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-1);
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- Alertas ---------- */
+.alerta {
+  --alerta-color: var(--info);
+  padding: var(--esp-2);
+  border-left: 4px solid var(--alerta-color);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--alerta-color) 10%, var(--superficie));
+  color: var(--texto);
+}
+
+.alerta--exito       { --alerta-color: var(--exito); }
+.alerta--advertencia { --alerta-color: var(--advertencia); }
+.alerta--error       { --alerta-color: var(--error); }
+.alerta--info        { --alerta-color: var(--info); }
+
+/* ---------- Pantalla de carga ---------- */
+.pantalla-carga {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  background: color-mix(in srgb, var(--fondo) 92%, transparent);
+  color: var(--texto);
+  text-align: center;
+}
+
+.pantalla-carga {
+  transition: opacity 300ms ease;
+}
+
+.pantalla-carga--saliendo {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pantalla-carga__logo {
+  width: 72px;
+  height: 72px;
+  animation: latido 1.4s ease-in-out infinite;
+}
+
+@keyframes latido {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.pantalla-carga__spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--borde);
+  border-top-color: var(--primario);
+  border-radius: 50%;
+  animation: girar 0.9s linear infinite;
+}
+
+.pantalla-carga__texto {
+  font-weight: 600;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Encabezado de página ---------- */
+.encabezado {
+  margin-bottom: var(--esp-4);
+}
+
+.encabezado__etiqueta {
+  display: inline-block;
+  margin-bottom: var(--esp-1);
+  color: var(--primario-texto);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.encabezado p {
+  max-width: 64ch;
+  margin-top: var(--esp-1);
+  color: var(--texto-secundario);
+  font-size: 1.0625rem;
+}
+
+@media (min-width: 1024px) {
+  h1 { font-size: 2.5rem; }
+}
+
+/* ---------- Pie de página ---------- */
+.pie {
+  padding-block: var(--esp-3);
+  border-top: 1px solid var(--borde);
+  background: var(--superficie);
+  color: var(--texto-secundario);
+  font-size: 0.875rem;
+}
+
+.pie__interior {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+}
+
+@media (min-width: 640px) {
+  .pie__interior {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* ---------- Movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .pantalla-carga__logo {
+    animation: none;
+  }
+
+  .logo__guino {
+    animation: none;
+  }
+
+  .pantalla-carga__spinner {
+    animation: none;
+    border-top-color: var(--primario);
+  }
+}
